@@ -424,27 +424,44 @@
         <!-- EmailJS Library -->
         <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
 
-        <script>
-            (function () {
-                emailjs.init("uwhdVsPk84aIdRqPR"); // Replace with your EmailJS Public Key
-            })();
+        <!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
-            document.getElementById("contact-form").addEventListener("submit", function (e) {
-                e.preventDefault();
-                console.log("Form submitted, sending email...");
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // 1) Initialize SDK
+  try {
+    emailjs.init({ publicKey: "uwhdVsPk84aIdRqPR" }); // your public key
+    console.log("EmailJS initialized");
+  } catch (err) {
+    console.error("EmailJS init failed:", err);
+  }
 
-                emailjs.sendForm("service_lh7wuw8", "template_x24tw3i", this).then(
-                    function (response) {
-                        console.log("✅ EmailJS sendForm success:", response);
-                        alert("✅ Message sent successfully!");
-                        document.getElementById("contact-form").reset();
-                    },
-                    function (error) {
-                        console.error("❌ EmailJS error:", error);
-                        alert("❌ Failed to send message: " + JSON.stringify(error));
-                    }
-                );
-            });
-        </script>
+  // 2) Hook up the form submit
+  var form = document.getElementById("contact-form");
+  if (!form) {
+    console.error("No form with id='contact-form' found.");
+    return;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    console.log("Submitting to EmailJS…");
+
+    emailjs
+      .sendForm("service_lh7wuw8", "template_x24tw3i", form)
+      .then(function (res) {
+        console.log("✅ EmailJS success:", res);
+        alert("✅ Message sent successfully!");
+        form.reset();
+      })
+      .catch(function (err) {
+        console.error("❌ EmailJS error:", err);
+        alert("❌ Failed to send message. See console for details.");
+      });
+  });
+});
+</script>
+
     </body>
 </html>
