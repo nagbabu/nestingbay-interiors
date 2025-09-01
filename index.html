@@ -438,10 +438,7 @@
 
   // 2) Hook up the form submit
   var form = document.getElementById("contact-form");
-  if (!form) {
-    console.error("No form with id='contact-form' found.");
-    return;
-  }
+  
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
