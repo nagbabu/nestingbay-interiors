@@ -448,17 +448,24 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     console.log("Submitting to EmailJS…");
 
-    emailjs
-      .sendForm("service_lh7wuw8", "template_x24tw3i", form)
-      .then(function (res) {
-        console.log("✅ EmailJS success:", res);
-        alert("✅ Message sent successfully!");
-        form.reset();
-      })
-      .catch(function (err) {
-        console.error("❌ EmailJS error:", err);
-        alert("❌ Failed to send message. See console for details.");
-      });
+
+      emailjs.send("service_lh7wuw8", "template_x24tw3i", {
+    name: "Test Name",
+    email: "test@example.com",
+    phone: "1234567890",
+    service: "Test Service",
+    message: "This is a test message"
+}).then(
+    function(response) {
+        console.log("✅ SUCCESS", response);
+    },
+    function(error) {
+        console.error("❌ ERROR", error);
+    }
+);
+
+
+    
   });
 });
 </script>
